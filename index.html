@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+
+  <title>stephskardal/piggybak @ GitHub</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #17A2A2;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #ffffff;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #e85d5d; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #e85d5d; }
+    h3 { text-align: center; color: #e85d5d; }
+    a { color: #e85d5d; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+  </style>
+</head>
+
+<body>
+  <a href="https://github.com/stephskardal/piggybak"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <div class="download">
+      <a href="https://github.com/stephskardal/piggybak/zipball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
+      <a href="https://github.com/stephskardal/piggybak/tarball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+    </div>
+
+    <h1><a href="https://github.com/stephskardal/piggybak">piggybak</a>
+      <span class="small">by <a href="https://github.com/stephskardal">stephskardal</a></span></h1>
+
+    <div class="description">
+      Modular ecommerce engine for Ruby on Rails.
+    </div>
+
+    
+
+    
+      <h2>Dependencies</h2>
+      <p>Rails 3.1
+RailsAdmin
+Devise
+CanCan</p>
+    
+
+    
+      <h2>Install</h2>
+      <p>== Installation
+
+* First, add to Gemfile:
+    
+    gem "piggybak", :git => "git://github.com/stephskardal/demo.git"
+
+* Next, run rake task to copy migrations:
+
+    rake piggybak_engine:install:migrations
+
+* Next, run rake task to run migrations:
+
+    rake db:migrate
+
+* Next, mount in your application by adding:
+
+    mount Piggybak::Engine => '/checkout', :as => 'piggybak'" to config/routes
+
+
+
+== Integration Components
+
+* Add acts_as_variant to models that will be sellable
+* Add acts_as_orderer to user model (or model that devise hooks into as authenticated user)
+* Add <%= cart_form(@some_item) %> to view to display cart form
+* Add <%= cart_link %> to display link to cart
+* Add <%= orders_link %> to display link to user orders
+
+
+
+== Recipes
+
+* Redirect after login / logout
+
+    before_filter :set_last_page
+
+    def set_last_page
+        if !request.xhr? && !request.url.match(/users\/sign_in/) && !request.url.match(/users\/sign_out/)
+        session[:return_to] = request.url
+        end
+    end
+    def after_sign_in_path_for(resource_or_scope)
+        session[:return_to] || root_url
+    end
+    def after_sign_out_path_for(resource_or_scope)
+        session[:return_to] || root_url
+    end
+
+
+
+* Cancan access control
+    class Ability
+        include CanCan::Ability
+        def initialize(user)
+            if user && user.roles.include?(Role.find_by_name("admin"))
+            can :access, :rails_admin
+            can :manage, [ #Insert your app models here
+                            ::Piggybak::Variant,
+                            ::Piggybak::ShippingMethod,
+                            ::Piggybak::PaymentMethod,
+                            ::Piggybak::TaxMethod,
+                            ::Piggybak::State,
+                            ::Piggybak::Country]
+
+            # can't delete orders
+            can [:download, :email, :read, :create, :update, :history, :export], ::Piggybak::Order
+            end
+        end
+    end
+</p>
+    
+
+    
+
+    
+      <h2>Authors</h2>
+      <p>Brian Buchalter (brianb@endpoint.com)<br/>Steph Skardal (steph@endpoint.com)<br/>      </p>
+    
+
+    
+      <h2>Contact</h2>
+      <p>Steph Skardal (steph@endpoint.com)<br/>      </p>
+    
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="https://github.com/stephskardal/piggybak/zipball/master">zip</a> or
+      <a href="https://github.com/stephskardal/piggybak/tarball/master">tar formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/stephskardal/piggybak</pre>
+    </p>
+
+    <div class="footer">
+      get the source code on GitHub : <a href="https://github.com/stephskardal/piggybak">stephskardal/piggybak</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
