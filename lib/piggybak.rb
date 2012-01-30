@@ -3,6 +3,7 @@ require 'acts_as_variant/base'
 require 'acts_as_orderer/base'
 require 'active_merchant'
 require 'currency'
+require 'rails_admin/config/actions/download'
 
 module Piggybak
   def self.config(entity = nil, &block)

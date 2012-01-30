@@ -1,0 +1,6 @@
+en:
+  admin:
+    actions:
+      download:
+        menu: "Download (Text)"
+        breadcrumb: "Download (Text)"

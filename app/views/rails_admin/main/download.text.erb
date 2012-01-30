@@ -1,0 +1,19 @@
+Order: #<%= @object.id %>
+
+Email: <%= @object.email %>
+Phone: <%= @object.phone %>
+
+<% @object.line_items.each do |line_item| %>
+<%= line_item.quantity %> x <%= raw line_item.variant.description %> (<%= number_to_currency line_item.total %>)
+<% end -%>
+
+Subtotal: <%= number_to_currency @object.line_items.inject(0) { |subtotal, li| subtotal + li.total } %>
+Tax: <%= number_to_currency @object.tax_charge %>
+Shipping: <%= number_to_currency @object.shipments.inject(0) { |shipping, shipment| shipping + shipment.total } %>
+Total: <%= number_to_currency @object.total %>
+
+Billing Information
+<%= raw @object.billing_address.display.gsub("<br />", "\n") %>
+
+Shipping Information
+<%= raw @object.shipping_address.display.gsub("<br />", "\n") %>

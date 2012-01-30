@@ -54,16 +54,6 @@ module Piggybak
       redirect_to root if current_user.nil?
     end
 
-    def download
-      @order = Piggybak::Order.find(params[:id])
-
-      if can?(:download, @order)
-        render :layout => false
-      else
-        render "no_access"
-      end
-    end
-
     def email
       order = Order.find(params[:id])
 
