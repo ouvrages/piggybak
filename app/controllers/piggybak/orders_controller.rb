@@ -23,6 +23,8 @@ module Piggybak
             end
           end
         rescue Exception => e
+          logger.error e.message
+          raise e if @order.nil?
           if @order.errors.empty?
             @order.errors[:base] << "Your order could not go through. Please try again."
           end
