@@ -11,7 +11,9 @@ module Piggybak
     after_create :decrease_inventory
     after_destroy :increase_inventory
     after_update :update_inventory
-        
+    
+    attr_accessible :variant_id, :total, :quantity
+    
     def admin_label
       "#{self.quantity} x #{self.variant.description}"
     end

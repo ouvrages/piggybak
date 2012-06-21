@@ -28,6 +28,8 @@ module Piggybak
     after_validation :update_totals
     before_save :process_payments, :update_status
 
+    attr_accessible :email, :phone, :billing_address_attributes, :shipping_address_attributes, :payments_attributes, :shipments_attributes
+    
     def initialize_nested
       self.billing_address ||= Piggybak::Address.new
       self.shipping_address ||= Piggybak::Address.new

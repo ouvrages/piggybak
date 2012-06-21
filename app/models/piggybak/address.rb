@@ -12,6 +12,8 @@ module Piggybak
     validates_presence_of :zip
 
     after_initialize :set_default_country
+    
+    attr_accessible :firstname, :lastname, :address1, :address2, :city, :country_id, :state_id, :zip
 
     def set_default_country
       self.country ||= Country.find_by_abbr(Piggybak.config.default_country)
