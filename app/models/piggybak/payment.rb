@@ -5,9 +5,9 @@ module Piggybak
 
     validates_presence_of :status
     validates_presence_of :total
-    validates_presence_of :payment_method_id
-    validates_presence_of :month
-    validates_presence_of :year
+    validates_presence_of :payment_method_id, :if => proc { Piggybak.config.payment_flow != :integration }
+    validates_presence_of :month, :if => proc { Piggybak.config.payment_flow != :integration }
+    validates_presence_of :year, :if => proc { Piggybak.config.payment_flow != :integration }
 
     attr_accessor :number
     attr_accessor :verification_value
@@ -36,6 +36,8 @@ module Piggybak
     end
 
     def process
+      return true if Piggybak.config.payment_flow == :integration
+      
       ActiveMerchant::Billing::Base.mode = Piggybak.config.activemerchant_mode
 
       if self.new_record?
@@ -96,7 +98,7 @@ module Piggybak
     alias :details :admin_label
 
     validates_each :payment_method_id do |record, attr, value|
-      if record.new_record?
+      if Piggybak.config.payment_flow != :integration and record.new_record?
   	    credit_card = ActiveMerchant::Billing::CreditCard.new(record.credit_card)
   	 
         if !credit_card.valid?

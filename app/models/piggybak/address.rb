@@ -7,7 +7,7 @@ module Piggybak
     validates_presence_of :lastname
     validates_presence_of :address1
     validates_presence_of :city
-    validates_presence_of :state_id
+    validates_presence_of :state_id, :if => proc { |address| address.country and address.country.states.size > 0 }
     validates_presence_of :country_id
     validates_presence_of :zip
 

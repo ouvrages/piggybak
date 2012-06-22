@@ -8,6 +8,7 @@ module Piggybak
       attr_accessor :activemerchant_mode
       attr_accessor :email_sender
       attr_accessor :order_cc
+      attr_accessor :payment_flow
 
       def reset
         @email_sender = "support@piggybak.org"
@@ -23,6 +24,8 @@ module Piggybak
         @default_country = "US"
 
         @activemerchant_mode = :production
+        
+        @payment_flow = :gateway
       end
     end
 
