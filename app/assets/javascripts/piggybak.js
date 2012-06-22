@@ -93,13 +93,13 @@ var piggybak = {
 	},
 	update_totals: function() {
 		var subtotal = $('#subtotal_total').data('total');
-		$('#tax_total').html('$' + tax_total.toFixed(2));
+		$('#tax_total').html('$' + parseFloat(tax_total).toFixed(2));
 		var shipping_total = 0;
 		if($('#shipping select option:selected').length) {
 			shipping_total = $('#shipping select option:selected').data('rate');
 		}
-		$('#shipping_total').html('$' + shipping_total.toFixed(2));
-		var order_total = subtotal + tax_total + shipping_total;
-		$('#order_total').html('$' + order_total.toFixed(2));	
+		$('#shipping_total').html('$' + parseFloat(shipping_total).toFixed(2));
+		var order_total = parseFloat(subtotal) + parseFloat(tax_total) + parseFloat(shipping_total);
+		$('#order_total').html('$' + parseFloat(order_total).toFixed(2));	
 	}
 };
