@@ -90,6 +90,14 @@ module Piggybak
       cart = Piggybak::Cart.new(request.cookies["cart"])
       cart.set_extra_data(params)
       shipping_methods = Piggybak::ShippingMethod.lookup_methods(cart)
+      shipping_methods.each do |method|
+        if method[:rate]
+          method[:label] = "#{method[:description]} #{view_context.number_to_currency(method[:rate])}"
+        else
+          method[:label] = "#{method[:description]}"
+        end
+      end
+
       render :json => shipping_methods
     end
 

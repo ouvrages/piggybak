@@ -40,7 +40,7 @@ module Piggybak
         if klass.available?(method, cart)
           rate = klass.rate(method, cart)
           arr << {
-            :label => "#{method.description} $#{"%.2f" % rate}",
+            :description => method.description,
 			:id => method.id,
             :rate => rate }
 		end
