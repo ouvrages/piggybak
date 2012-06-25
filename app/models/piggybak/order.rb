@@ -126,7 +126,7 @@ module Piggybak
       return if self.status == "cancelled"  # do nothing
 
       if self.total_due > 0.00
-        self.status = "payment owed"
+        self.status = "payment_owed"
       elsif self.total_due < 0.00
         self.status = "credit_owed" 
       else
