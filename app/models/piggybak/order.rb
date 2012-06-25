@@ -36,7 +36,7 @@ module Piggybak
       self.shipments ||= [Piggybak::Shipment.new] 
       self.payments ||= [Piggybak::Payment.new]
       if self.payments.any?
-        self.payments.first.payment_method_id = Piggybak::PaymentMethod.find_by_active(true).id
+        self.payments.first.payment_method_id = Piggybak::PaymentMethod.find_by_active(true).try(:id)
       end
     end
 
