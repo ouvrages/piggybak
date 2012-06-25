@@ -141,7 +141,7 @@ module Piggybak
     end
 
     def status_enum
-      ["incomplete", "paid", "shipped"]
+      ["new", "payment_owed", "credit_owed", "paid", "shipped", "cancelled"]
     end
       
     def avs_address
