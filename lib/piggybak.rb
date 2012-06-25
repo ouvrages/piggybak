@@ -27,6 +27,8 @@ module Piggybak
     end
 
     initializer "piggybak.rails_admin_config" do |app|
+      next unless defined? RailsAdmin
+      
       # RailsAdmin config file. Generated on December 21, 2011 13:04
       # See github.com/sferik/rails_admin for more informations
 
