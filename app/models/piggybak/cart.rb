@@ -1,5 +1,9 @@
 module Piggybak
   class Cart
+    extend ActiveModel::Naming
+    extend ActiveModel::Translation
+    
+    attr_accessor :name
     attr_accessor :items
     attr_accessor :total
     attr_accessor :errors
@@ -7,7 +11,7 @@ module Piggybak
   
     def initialize(cookie='')
       self.items = []
-      self.errors = []
+      @errors = ActiveModel::Errors.new(self)
       cookie ||= ''
       cookie.split(';').each do |item|
         item_variant = Piggybak::Variant.find_by_id(item.split(':')[0])
@@ -64,17 +68,17 @@ module Piggybak
     end
   
     def update_quantities
-      self.errors = []
+      self.errors.clear
       new_items = []
       self.items.each do |item|
         if !item[:variant].active
-          self.errors << ["Sorry, #{item[:variant].description} is no longer for sale"]
+          self.errors.add(:base, :item_no_longer_available, :description =>  item[:variant].description)
         elsif item[:variant].unlimited_inventory || item[:variant].quantity >= item[:quantity]
           new_items << item
         elsif item[:variant].quantity == 0
-          self.errors << ["Sorry, #{item[:variant].description} is no longer available"]
+          self.errors.add(:base, :item_no_longer_available, :description =>  item[:variant].description)
         else
-          self.errors << ["Sorry, only #{item[:variant].quantity} available for #{item[:variant].description}"]
+          self.errors.add(:base, :item_available_in_limited_quantity, :description =>  item[:variant].description, :quantity => item[:variant].quantity)
           item[:quantity] = item[:variant].quantity
           new_items << item if item[:quantity] > 0
         end
