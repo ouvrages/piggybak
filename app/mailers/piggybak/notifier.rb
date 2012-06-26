@@ -20,7 +20,15 @@ module Piggybak
     def staff_notification(order)
       @order = order
 
-      mail(:to => Piggybak.config.staff_notification_email)
+      begin
+        if Piggybak.config.staff_locale
+          initial_locale = I18n.locale
+          I18n.locale = Piggybak.config.staff_locale
+        end
+        mail(:to => Piggybak.config.staff_notification_email)
+      ensure
+        I18n.locale = initial_locale if initial_locale
+      end
     end
   end
 end

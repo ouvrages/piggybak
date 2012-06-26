@@ -9,7 +9,7 @@ module Piggybak
       attr_accessor :email_sender
       attr_accessor :order_cc
       attr_accessor :payment_flow
-      attr_accessor :staff_notification_email
+      attr_accessor :staff_notification_email, :staff_locale
 
       def reset
         @email_sender = "support@piggybak.org"
@@ -29,6 +29,7 @@ module Piggybak
         @payment_flow = :gateway
         
         @staff_notification_email = nil
+        @staff_locale = nil
       end
     end
 
