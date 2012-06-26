@@ -7,3 +7,8 @@ fr:
             base:
               item_no_longer_available: "Désolé, %{description} n'est plus disponible à la vente"
               item_available_in_limited_quantity: "Désolé, la quantité maximal disponible pour #{description} est %{quantity}"
+
+  piggybak:
+    notifier:
+      order_notification:
+        subject: Confirmation de commande

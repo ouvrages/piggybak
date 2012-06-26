@@ -7,3 +7,8 @@ en:
             base:
               item_no_longer_available: "Sorry, %{description} is no longer for sale"
               item_available_in_limited_quantity: "Sorry, only %{quantity} available for %{description}"
+
+  piggybak:
+    notifier:
+      order_notification:
+        subject: Order confirmation
