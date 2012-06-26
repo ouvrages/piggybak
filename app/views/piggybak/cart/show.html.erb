@@ -3,7 +3,7 @@
 <h1>Shopping Cart</h1>
 <% if @cart.errors.any? -%>
 <div id="cart_error">
-<%= raw @cart.errors.join('<br />') %>
+<%= raw @cart.errors.full_messages.join('<br />') %>
 </div>
 <% end -%>
 
