@@ -170,5 +170,9 @@ module Piggybak
         Piggybak::Notifier.staff_notification(self).deliver if Piggybak.config.staff_notification_email
       end
     end
+    
+    def total_shipments
+      shipments.inject(0) { |shipping, shipment| shipping + shipment.total }
+    end
   end
 end
