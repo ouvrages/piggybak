@@ -10,7 +10,7 @@ module Piggybak
           @order.initialize_user(current_user, true)
 
           @order.add_line_items(@cart)
-          @order.locale = I18n.locale if @order.respond_to("locale=")
+          @order.locale = I18n.locale if @order.respond_to?("locale=")
 
           if @order.save
             cookies["cart"] = { :value => '', :path => '/' }
