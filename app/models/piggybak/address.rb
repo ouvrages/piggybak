@@ -19,15 +19,24 @@ module Piggybak
       self.country ||= Country.find_by_abbr(Piggybak.config.default_country)
     end
 
-    def admin_label
-      address = "#{self.firstname} #{self.lastname}<br />"
-      address += "#{self.address1}<br />"
-      if self.address2 && self.address2 != ''
-        address += "#{self.address2}<br />"
+    def admin_label(format = :html)
+      case format
+      when :html
+        separator = "<br />"
+      when :text
+        separator = "\n"
+      else
+        raise "Invalid format: #{format.inspect}"
       end
-      address += "#{self.city}, #{self.state_display} #{self.zip}<br />"
-      address += "#{self.country.name}"
-      address
+      address = []
+      address << "#{self.firstname} #{self.lastname}"
+      address << "#{self.address1}"
+      if self.address2.present?
+        address << "#{self.address2}"
+      end
+      address << "#{self.city}, #{self.state_display} #{self.zip}"
+      address << "#{self.country.name}"
+      address.join(separator)
     end
     alias :display :admin_label  
 
