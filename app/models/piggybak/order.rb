@@ -29,6 +29,8 @@ module Piggybak
 
     attr_accessible :email, :phone, :billing_address_attributes, :shipping_address_attributes, :payments_attributes, :shipments_attributes
     
+    default_scope :order => 'created_at DESC'
+
     def initialize_nested
       self.billing_address ||= Piggybak::Address.new
       self.shipping_address ||= Piggybak::Address.new
