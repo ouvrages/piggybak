@@ -12,8 +12,6 @@ module Piggybak
           @order.add_line_items(@cart)
 
           if @order.save
-            Piggybak::Notifier.order_notification(@order).deliver
-
             cookies["cart"] = { :value => '', :path => '/' }
             session[:last_order] = @order.id
             redirect_to piggybak.receipt_url 

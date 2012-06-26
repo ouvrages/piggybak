@@ -26,6 +26,7 @@ module Piggybak
     before_validation :set_defaults
     after_validation :update_totals
     before_save :process_payments, :update_status
+    after_save :send_notifications
 
     attr_accessible :email, :phone, :billing_address_attributes, :shipping_address_attributes, :payments_attributes, :shipments_attributes
     
@@ -161,6 +162,12 @@ module Piggybak
 
     def subtotal
       self.line_items.inject(0) { |subtotal, li| subtotal + li.total }
+    end
+    
+    def send_notifications
+      if status_changed? and changes["status"].last == "paid"
+        Piggybak::Notifier.order_notification(self).deliver
+      end
     end
   end
 end
