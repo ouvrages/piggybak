@@ -167,6 +167,7 @@ module Piggybak
     def send_notifications
       if status_changed? and changes["status"].last == "paid"
         Piggybak::Notifier.order_notification(self).deliver
+        Piggybak::Notifier.staff_notification(self).deliver if Piggybak.config.staff_notification_email
       end
     end
   end

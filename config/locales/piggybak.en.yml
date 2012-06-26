@@ -12,3 +12,5 @@ en:
     notifier:
       order_notification:
         subject: Order confirmation
+      staff_notification:
+        subject: New order

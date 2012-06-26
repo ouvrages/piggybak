@@ -12,3 +12,5 @@ fr:
     notifier:
       order_notification:
         subject: Confirmation de commande
+      staff_notification:
+        subject: Nouvelle commande

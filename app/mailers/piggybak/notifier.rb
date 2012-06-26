@@ -8,5 +8,11 @@ module Piggybak
 
       mail(:to => order.email)
     end
+    
+    def staff_notification(order)
+      @order = order
+
+      mail(:to => Piggybak.config.staff_notification_email)
+    end
   end
 end
