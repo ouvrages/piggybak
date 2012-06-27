@@ -72,7 +72,9 @@ module Piggybak
       cart.items.each do |item|
         line_item = Piggybak::LineItem.new({ :variant_id => item[:variant].id,
           :total => item[:variant].price*item[:quantity],
-          :quantity => item[:quantity] })
+          :quantity => item[:quantity],
+          :price => item[:variant].price,
+          :description => item[:variant].description})
         self.line_items << line_item
       end
     end
