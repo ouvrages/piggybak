@@ -17,6 +17,7 @@ module Piggybak
 
     validates_presence_of :status  
     validates_presence_of :email
+    validates_presence_of :phone
     validates_presence_of :total
     validates_presence_of :total_due
     validates_presence_of :tax_charge
